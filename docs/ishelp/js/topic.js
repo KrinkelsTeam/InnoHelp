@@ -56,7 +56,7 @@ function create_redirect_box()
 {
 	redirectBox = document.createElement("div");
 	redirectBox.id = "redirectbox";
-	redirectBox.innerHTML = "Loading contents...";
+	redirectBox.innerHTML = "Загрузка контента...";
 	redirectBox.style.visibility = "hidden";
 	document.body.appendChild(redirectBox);
 
@@ -75,7 +75,7 @@ function topic_loaded()
 
 	if (window == window.top &&
 	    (window.location.protocol == "http:" || window.location.protocol == "https:") &&
-	    (window.location.hostname == "jrsoftware.org" || window.location.hostname == "www.jrsoftware.org") &&
+	    (window.location.hostname == "krinkels.org") &&
 	    (matches = window.location.pathname.match(/^(\/.+\/)topic_([a-z0-9_\-]+)\.htm$/)) &&
 	    window.location.hash != "#noredir") {
 

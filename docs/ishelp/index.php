@@ -1,17 +1,31 @@
 <?php
 
-$topic = @$_GET['topic'];
-if (!preg_match('/^[a-z0-9_\-]+\z/', $topic))
-  $topic = 'whatisinnosetup';
+// Получаем и валидируем 'topic'
+$topic = $_GET['topic'] ?? '';
+$topic = trim($topic);
+if (!preg_match('/^[a-z0-9_\-]+$/', $topic)) {
+    $topic = 'whatisinnosetup';
+}
 
-$anchor = '#' . @$_GET['anchor'];
-if (!preg_match('/^#[a-zA-Z0-9_\-.]+\z/', $anchor))
-  $anchor = '';
+// Получаем и валидируем 'anchor'
+$anchorRaw = $_GET['anchor'] ?? '';
+$anchorRaw = trim($anchorRaw);
+$anchor = '#' . $anchorRaw;
+if (!preg_match('/^#[a-zA-Z0-9_\-.]+$/', $anchor)) {
+    $anchor = '';
+}
 
-$text = @file_get_contents('index.htm');
-if (!$text) die('Error reading file');
+// Чтение файла
+$text = file_get_contents('index.htm');
+if ($text === false) {
+    http_response_code(500);
+    exit('Ошибка чтения файла index.htm');
+}
 
-$text = str_replace('topic_whatisinnosetup.htm', htmlspecialchars("topic_$topic.htm$anchor"), $text);
+// Замена ссылки
+$link = htmlspecialchars("topic_$topic.htm$anchor", ENT_QUOTES | ENT_HTML5, 'UTF-8');
+$text = str_replace('topic_whatisinnosetup.htm', $link, $text);
+
+// Вывод
+header('Content-Type: text/html; charset=UTF-8');
 echo $text;
-
-?>
