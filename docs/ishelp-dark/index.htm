@@ -38,6 +38,24 @@
   {
     footerFrameLoaded = true;
   }
+  
+  // Check for host and update frames src
+  window.onload = function () {
+    if (window.location.hostname === "krinkels.org") {
+	  var frames = [
+	    { name: "contentsframe", src: "contents.htm" },
+		{ name: "bodyframe", src: "topic_whatisinnosetup.htm" },
+		{ name: "footerframe", src: "contents_footer.htm" }
+	  ];
+
+	  for (var i = 0; i < frames.length; i++) {
+	    var frameTag = document.getElementsByName(frames[i].name)[0];
+	    if (frameTag) {
+	      frameTag.src = frames[i].src;
+	    }
+	  }
+	}
+  };
 
   -->
   </script>
